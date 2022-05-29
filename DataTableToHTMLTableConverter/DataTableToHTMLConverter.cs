@@ -17,43 +17,44 @@ using System.Threading.Tasks;
 namespace DataTableToHTMLTableConverter
 
 {
-    //comment
-    public class HtmlCreator : CodeActivity
+    
+
+    public class DataTableToHTMLConverter : CodeActivity
 
     {
 
         [Category("Input")]
-
+        [Description("The DataTable object to be converted to HTML")]
         [RequiredArgument]
 
         public InArgument<DataTable> DataTable { get; set; }
 
         [Category("Options")]
-
+        [Description("#FFFFFF or White")]
         public InArgument<string> HeaderBackgroundColor { get; set; }
 
 
 
         [Category("Options")]
-
+        [Description("0")]
         public InArgument<string> TableBorder { get; set; }
 
 
 
         [Category("Options")]
-
+        [Description("0")]
         public InArgument<string> TableCellPadding { get; set; }
 
 
 
         [Category("Options")]
-
+        [Description("0")]
         public InArgument<string> TableCellSpacing { get; set; }
 
 
 
         [Category("Output")]
-
+    
         public OutArgument<string> HTMLTable { get; set; }
 
 
@@ -111,7 +112,7 @@ namespace DataTableToHTMLTableConverter
 
             var dataTable = DataTable.Get(context);
 
-            var backgroundColor = HeaderBackgroundColor.Get(context) == null ? "#FFFFFF" : HeaderBackgroundColor.Get(context);
+            var backgroundColor = HeaderBackgroundColor.Get(context) == null ? "white" : HeaderBackgroundColor.Get(context);
 
             var border = TableBorder.Get(context);
 
