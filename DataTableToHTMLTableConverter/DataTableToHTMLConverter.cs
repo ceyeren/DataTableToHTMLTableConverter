@@ -33,22 +33,26 @@ namespace DataTableToHTMLTableConverter
         [Description("#FFFFFF or White")]
         public InArgument<string> HeaderBackgroundColor { get; set; }
 
+        [Category("Options")]
+        [Description("#FFFFFF or White")]
+        public InArgument<string> BodyBackgroundColor { get; set; }
+
 
 
         [Category("Options")]
-        [Description("0")]
+        [Description("\"0\"")]
         public InArgument<string> TableBorder { get; set; }
 
 
 
         [Category("Options")]
-        [Description("0")]
+        [Description("\"0\"")]
         public InArgument<string> TableCellPadding { get; set; }
 
 
 
         [Category("Options")]
-        [Description("0")]
+        [Description("\"0\"")]
         public InArgument<string> TableCellSpacing { get; set; }
 
 
@@ -61,11 +65,11 @@ namespace DataTableToHTMLTableConverter
 
 
 
-        public string generateHtml(DataTable data_table, string backgroundColor, string border, string spacing, string padding)
+        public string generateHtml(DataTable data_table,string headerBackgroundColor ,string backgroundColor, string border, string spacing, string padding)
 
         {
 
-            string textBody = " <table border=" + Convert.ToInt32(border) + " cellpadding=" + Convert.ToInt32(padding) + " cellspacing=" + Convert.ToInt32(spacing) + "><tr bgcolor='" + backgroundColor + "'>";
+            string textBody = " <table border=" + Convert.ToInt32(border) + " cellpadding=" + Convert.ToInt32(padding) + " cellspacing=" + Convert.ToInt32(spacing) + "><tr bgcolor='" + headerBackgroundColor + "'>";
 
             foreach (DataColumn dataColumn in data_table.Columns)
 
@@ -88,7 +92,7 @@ namespace DataTableToHTMLTableConverter
                 foreach (DataColumn dataColumn in data_table.Columns)
                 {
 
-                    textBody += "<td>" + data_table.Rows[loopCount][dataColumn.ColumnName] + "</td>";
+                    textBody += "<td bgcolor='"+ backgroundColor +"'> " + data_table.Rows[loopCount][dataColumn.ColumnName] + "</td>";
 
                 }
 
@@ -112,7 +116,8 @@ namespace DataTableToHTMLTableConverter
 
             var dataTable = DataTable.Get(context);
 
-            var backgroundColor = HeaderBackgroundColor.Get(context) == null ? "white" : HeaderBackgroundColor.Get(context);
+            var headerBackgroundColor = HeaderBackgroundColor.Get(context) == null ? "white" : HeaderBackgroundColor.Get(context);
+            var backgroundColor = BodyBackgroundColor.Get(context) == null ? "white" : BodyBackgroundColor.Get(context);
 
             var border = TableBorder.Get(context);
 
@@ -120,7 +125,7 @@ namespace DataTableToHTMLTableConverter
 
             var padding = TableCellPadding.Get(context);
 
-            var text = generateHtml(dataTable, backgroundColor, border, spacing, padding);
+            var text = generateHtml(dataTable,headerBackgroundColor,backgroundColor, border, spacing, padding);
 
             HTMLTable.Set(context, text);
 
